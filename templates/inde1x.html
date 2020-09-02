@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block content %}
+
+<h2>Speaker Verification</h2>
+
+<div>
+<!--    <form id="upload-file" method="post" enctype="multipart/form-data">-->
+<!--        <label for="audioUpload" class="upload-label">-->
+<!--            Choose...-->
+<!--        </label>-->
+<!--        <input type="file" name="file" id="audioUpload" accept=".wav, .flac">-->
+<!--    </form>-->
+    <form id="upload-file" method="post" enctype="multipart/form-data">
+        <label for="audioUpload" class="upload-label">
+            Choose...
+        </label>
+        <input type="file" name="file" id="audioUpload" accept=".wav, .flac">
+    </form>
+
+    <div class="audio-section" style="display:none;">
+<!--        <div class="audio-preview">-->
+<!--            <div id="audioPreview">-->
+<!--                <h5>Dữ liệu gốc:<span><br><a id="original_dl" href="" style="font-weight: normal;"></a></span></h5>-->
+<!--                <audio id="original_audio" controls src="" type="audio/*">-->
+<!--                    &lt;!&ndash; <button onclick="upload('/upload');" id="original_download_btn" class="btn btn-success">Download</button>-->
+<!--                     &ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+        <audio controls="controls"></audio>
+        <div>
+            <button type="button" class="btn btn-primary btn-lg " id="btn-predict">Predict!</button>
+        </div>
+    </div>
+
+    <div class="loader" style="display:none;"></div>
+
+    <h3 id="result">
+        <span> </span>
+    </h3>
+
+</div>
+
+{% endblock %}
