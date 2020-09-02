@@ -33,11 +33,12 @@
         <div class="row">
             <div class="col">
             <div class="mb-3 mt-5">
-            <h2 class="mb-5" style="font-weight: normal">Công nghệ khử nhiễu dựa trên học sâu LSTM <br> Phục vụ VP UBND Hà Nội v2</h2>
+            <h2 class="mb-5" style="font-weight: normal">Công nghệ khử tiếng vọng dựa trên học sâu<br> Phục vụ VP UBND Hà Nội v2</h2>
               <div class="form-group mb-3">
+                  <h4>Thêm tiếng vọng vào file</h4>
                   <div class="custom-file">
-                      <input type="file" class="custom-file-input" name="file_input" id="file_input" oninput="input_filename();">
-                      <label id="file_input_label" class="custom-file-label" >Chọn file (wav, mp3, flac)</label>
+                      <input type="file" class="custom-file-input-add-reverb" name="file_input_add_reverb" id="file_input_add_reverb" oninput="input_filename();">
+                      <label id="file_input_label_add_reverb" class="custom-file-label_add_reverb" >Chọn file (wav, mp3, flac)</label>
                     </div>
                 </div>
                 <div id="progress_wrapper" class="d-none">
@@ -68,8 +69,8 @@
       </div>
 
       <script>
-        var input = document.getElementById("file_input")
-        var file_input_label = document.getElementById("file_input_label")
+        var input = document.getElementById("file_input_add_reverb")
+        var file_input_label = document.getElementById("file_input_label_add_reverb")
         var progress = document.getElementById("progress");
         var progress_wrapper = document.getElementById("progress_wrapper");
         var progress_status = document.getElementById("progress_status");
