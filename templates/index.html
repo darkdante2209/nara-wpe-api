@@ -61,9 +61,9 @@
                 <!-- <button onclick="upload('/upload');" id="original_download_btn" class="btn btn-success">Download</button>
                  -->
                 </div>
-            <div id="predict_play" style="margin: 30px;" class="d-none">
-                <h5>Tải về dữ liệu đã khử nhiễu:<span><br><a id="predict_dl" href="" style="font-weight: normal;"></a></span></h5>
-                <audio id="predict_audio" controls autoplay src="" type="audio/*">
+            <div id="add_reverb_play" style="margin: 30px;" class="d-none">
+                <h5>Tải về dữ liệu đã khử nhiễu:<span><br><a id="add_reverb_dl" href="" style="font-weight: normal;"></a></span></h5>
+                <audio id="add_reverb_audio" controls autoplay src="" type="audio/*">
             </div>
         </div>
       </div>
@@ -80,13 +80,13 @@
         var cancel_btn = document.getElementById("cancel_btn");
         var alert_wrapper = document.getElementById("alert_wrapper");
         var original_play = document.getElementById("original_play")
-        var predict_play = document.getElementById("predict_play")
+        var add_reverb_play = document.getElementById("add_reverb_play")
 
         var original_audio = document.getElementById("original_audio")
-        var predict_audio = document.getElementById("predict_audio")
+        var add_reverb_audio = document.getElementById("add_reverb_audio")
 
         var original_dl = document.getElementById("original_dl")
-        var predict_dl = document.getElementById("predict_dl")
+        var add_reverb_dl = document.getElementById("add_reverb_dl")
         //console.log(original_dl)
         function input_filename() {
                 file_input_label.innerText = input.files[0].name;}
@@ -122,7 +122,7 @@
             cancel_btn.classList.remove("d-none");
             progress_wrapper.classList.remove("d-none");
             original_play.classList.add("d-none")
-            predict_play.classList.add("d-none")
+            add_reverb_play.classList.add("d-none")
             var file = input.files[0];
             var filename = file.name;
             var filesize = file.size;
@@ -155,23 +155,23 @@
                     original_dl.innerText = request.response.file_path.replace('static/upload/','')
                     //loading_btn.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>" + " Predict..."
                     show_alert(request.response.file_path, "success")
-                    predict_rq = predict('/predict/' + String(request.response.file_path).split('/').join('='))
-                    //alert(predict_rq.status, "success")
-                    if (predict_rq.status == 200){
-                        json = JSON.parse(predict_rq.responseText)
+                        add_reverb_rq = add_reverb('/add_reverb/' + String(request.response.file_path).split('/').join('='))
+                    //alert(add_reverb_rq.status, "success")
+                    if (add_reverb_rq.status == 200){
+                        json = JSON.parse(add_reverb_rq.responseText)
                         show_alert(json.message, "success")
-                        //console.log(predict_rq.responseText)
+                        //console.log(add_reverb_rq.responseText)
                         //console.log(json.out_file_path)
-                        predict_play.classList.remove("d-none")
-                        predict_audio.src = json.out_file_path
+                        add_reverb_play.classList.remove("d-none")
+                        add_reverb_audio.src = json.out_file_path
                         //console.log(json.out_file_path)
-                        //predict_audio.autoplay = true
-                        predict_dl.href = json.out_file_path
-                        predict_dl.innerText = json.out_file_path.replace('static/upload/','')
+                        //add_reverb_audio.autoplay = true
+                        add_reverb_dl.href = json.out_file_path
+                        add_reverb_dl.innerText = json.out_file_path.replace('static/upload/','')
 
                     }
                     else{
-                        show_alert(`Error predict file:` + filename, "danger");
+                        show_alert(`Error add_reverb file:` + filename, "danger");
                     }
                     loading_btn.classList.add("d-none")
                     loading_btn.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>" + " Tải lên"
@@ -199,8 +199,8 @@
             })
         }
 
-        function predict(url){
-            console.log('in predict')
+        function add_reverb(url){
+            console.log('in add_reverb')
             var xmlHttp = new XMLHttpRequest();
             cancel_btn.classList.remove("d-none");
             //xmlHttp.responseType = "json";
