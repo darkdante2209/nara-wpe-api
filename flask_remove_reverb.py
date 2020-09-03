@@ -1,20 +1,28 @@
 import os
-import requests
-from flask import Flask, send_file, escape, request, render_template, jsonify, make_response, session
-import random
+from flask import Flask, request, render_template, jsonify, make_response
 from flask_cors import CORS
-from AudioLib.AudioProcessing import AudioProcessing
+import soundfile as sf
 import pathlib
+from tqdm import tqdm
 
 project_root = pathlib.Path(os.path.abspath(
     os.path.join(os.path.dirname(__file__), os.pardir)
 ))
 
+#Parameters
+stft_options = dict(size=512, shift=128)
+channels = 1
+delay = 3
+alpha=0.99
+taps = 10
+frequency_bins = stft_options['size'] // 2 + 1
+iterations=5
+
 app = Flask(__name__)
 CORS(app)
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_remove_reverb.html')
 
 @app.route('/upload', methods=['POST','GET'])
 def upload():
@@ -31,14 +39,28 @@ def upload():
         return res
     return render_template('index.html')
 
-@app.route('/add_reverb/<file_path>')
-def add_reverb(file_path):
+@app.route('/remove_reverb/<file_path>')
+def remove_reverb(file_path):
     print(file_path)
     file_path = file_path.replace('=', '/')
     file_name = '.'.join(file_path.split('.')[0:-1])
-    sound1 = AudioProcessing(str(file_path))
-    sound1.set_reverb(0.2, 0.5)
-    out_file_path = file_name + '_added_reverb.wav'
+    signal_list, sampling_rate = sf.read(str(file_path))
+    y = np.stack(signal_list, axis=0)
+    y = np.reshape(y, (1, y.shape[0]))
+    Y = stft(y, **stft_options).transpose(2, 0, 1)
+    Z = wpe(
+        Y,
+        taps=taps,
+        delay=delay,
+        iterations=iterations,
+        statistics_mode='full'
+    ).transpose(1, 2, 0)
+    z = istft(Z, size=stft_options['size'], shift=stft_options['shift'])
+    # save the dereverbration sound file
+    z_save = np.reshape(z, (z.shape[1],))
+    out_file_path = file_name + '_removed_reverb.wav'
+    sf.write(str(out_file_path), z_save, sampling_rate)
+    print("Finish Offline Algorithm")
     sound1.save_to_file(str(out_file_path))
     print('add reverb done!!')
     print (out_file_path)

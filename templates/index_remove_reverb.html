@@ -17,14 +17,14 @@
         padding: 8px;
         border-radius: 3px;
         margin-top: 10px;
-        
+
     }
     .container{
         padding-left: 10px;
         padding-right: 10px;
 		width: 100%;
     }
-	.row{        
+	.row{
 		width: 100%;
     }
 </style>
@@ -54,7 +54,7 @@
                 </button>
                 <button type="button" id="cancel_btn" class="btn btn-secondary d-none">Hủy</button>
             </div>
-            
+
             <div id="original_play" style="margin: 30px;" class="d-none">
                 <h5>Dữ liệu gốc:<span><br><a id="original_dl" href="" style="font-weight: normal;"></a></span></h5>
                 <audio id="original_audio" controls src="" type="audio/*">
@@ -150,7 +150,7 @@
                     show_alert(`${request.response.message}`, "success", true);
                     original_play.classList.remove("d-none")
                     original_audio.src = request.response.file_path
-                    
+
                     original_dl.href = request.response.file_path
                     original_dl.innerText = request.response.file_path.replace('static/upload/','')
                     //loading_btn.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>" + " Predict..."
@@ -175,7 +175,7 @@
                     }
                     loading_btn.classList.add("d-none")
                     loading_btn.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>" + " Tải lên"
-                    
+
                 }
                 else {
                     }
@@ -228,11 +228,11 @@
                 progress.setAttribute("style", `width: 0%`);
                 // Reset the input placeholder
                 file_input_label.innerText = "Chọn file (wav, mp3, flac)";
-                
+
             }
 
-        
-        
+
+
     </script>
 </body>
 </html>
