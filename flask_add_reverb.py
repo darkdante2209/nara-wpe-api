@@ -37,7 +37,7 @@ def add_reverb(file_path):
     file_path = file_path.replace('=', '/')
     file_name = '.'.join(file_path.split('.')[0:-1])
     sound1 = AudioProcessing(str(file_path))
-    sound1.set_reverb(0.2, 0.5)
+    sound1.set_reverb(0.08, 0.7)
     out_file_path = file_name + '_added_reverb.wav'
     sound1.save_to_file(str(out_file_path))
     print('add reverb done!!')

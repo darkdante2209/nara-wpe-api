@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 from nara_wpe.utils import stft, istft
-from nara_wpe.tf_wpe import wpe
+from nara_wpe.wpe import wpe_v0
 
 
 project_root = pathlib.Path(os.path.abspath(
@@ -54,7 +54,7 @@ def remove_reverb(file_path):
     y = np.stack(signal_list, axis=0)
     y = np.reshape(y, (1, y.shape[0]))
     Y = stft(y, **stft_options).transpose(2, 0, 1)
-    Z = wpe(
+    Z = wpe_v0(
         Y,
         taps=taps,
         delay=delay,
