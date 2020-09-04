@@ -10,7 +10,7 @@ from numpy.fft import rfft, irfft
 
 import string
 
-from wpe import segment_axis as segment_axis_v2
+from nara_wpe.wpe import segment_axis as segment_axis_v2
 
 
 # http://stackoverflow.com/a/3153267

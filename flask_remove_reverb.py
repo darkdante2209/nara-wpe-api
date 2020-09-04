@@ -4,6 +4,12 @@ from flask_cors import CORS
 import soundfile as sf
 import pathlib
 from tqdm import tqdm
+import matplotlib.pyplot as plt
+import numpy as np
+import time
+from nara_wpe.utils import stft, istft
+from nara_wpe.tf_wpe import wpe
+
 
 project_root = pathlib.Path(os.path.abspath(
     os.path.join(os.path.dirname(__file__), os.pardir)
@@ -61,10 +67,9 @@ def remove_reverb(file_path):
     out_file_path = file_name + '_removed_reverb.wav'
     sf.write(str(out_file_path), z_save, sampling_rate)
     print("Finish Offline Algorithm")
-    sound1.save_to_file(str(out_file_path))
     print('add reverb done!!')
     print (out_file_path)
-    res = make_response(jsonify({"out_file_path":out_file_path, "message": "Thêm tiếng vọng hoàn tất!"}))
+    res = make_response(jsonify({"out_file_path":out_file_path, "message": "Khử tiếng vọng hoàn tất!"}))
     return res, 200
 
 if __name__ == "__main__":

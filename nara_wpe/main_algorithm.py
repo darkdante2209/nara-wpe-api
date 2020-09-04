@@ -15,10 +15,10 @@ from tqdm import tqdm
 import pathlib
 import os
 
-from wpe import wpe
-from wpe import get_power
-from wpe import online_wpe_step, get_power_online, OnlineWPE
-from utils import stft, istft, get_stft_center_frequencies
+from nara_wpe.tf_wpe import wpe
+from nara_wpe.wpe import get_power
+from nara_wpe.wpe import online_wpe_step, get_power_online, OnlineWPE
+from nara_wpe.utils import stft, istft, get_stft_center_frequencies
 
 def offline_algorithm(signal_list,sampling_rate,stft_options,
                       channels,delay,iterations,taps,alpha,

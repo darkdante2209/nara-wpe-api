@@ -37,8 +37,8 @@
               <div class="form-group mb-3">
                   <h4>Thêm tiếng vọng vào file</h4>
                   <div class="custom-file">
-                      <input type="file" class="custom-file-input-add-reverb" name="file_input_add_reverb" id="file_input_add_reverb" oninput="input_filename();">
-                      <label id="file_input_label_add_reverb" class="custom-file-label_add_reverb" >Chọn file (wav, mp3, flac)</label>
+                      <input type="file" class="custom-file-input-remove-reverb" name="file_input_remove_reverb" id="file_input_remove_reverb" oninput="input_filename();">
+                      <label id="file_input_label_remove_reverb" class="custom-file-label_remove_reverb" >Chọn file (wav, mp3, flac)</label>
                     </div>
                 </div>
                 <div id="progress_wrapper" class="d-none">
@@ -61,16 +61,16 @@
                 <!-- <button onclick="upload('/upload');" id="original_download_btn" class="btn btn-success">Download</button>
                  -->
                 </div>
-            <div id="add_reverb_play" style="margin: 30px;" class="d-none">
-                <h5>Tải về dữ liệu đã thêm tiếng vọng<span><br><a id="add_reverb_dl" href="" style="font-weight: normal;"></a></span></h5>
-                <audio id="add_reverb_audio" controls autoplay src="" type="audio/*">
+            <div id="remove_reverb_play" style="margin: 30px;" class="d-none">
+                <h5>Tải về dữ liệu đã khử tiếng vọng<span><br><a id="remove_reverb_dl" href="" style="font-weight: normal;"></a></span></h5>
+                <audio id="remove_reverb_audio" controls autoplay src="" type="audio/*">
             </div>
         </div>
       </div>
 
       <script>
-        var input = document.getElementById("file_input_add_reverb")
-        var file_input_label = document.getElementById("file_input_label_add_reverb")
+        var input = document.getElementById("file_input_remove_reverb")
+        var file_input_label = document.getElementById("file_input_label_remove_reverb")
         var progress = document.getElementById("progress");
         var progress_wrapper = document.getElementById("progress_wrapper");
         var progress_status = document.getElementById("progress_status");
@@ -80,13 +80,13 @@
         var cancel_btn = document.getElementById("cancel_btn");
         var alert_wrapper = document.getElementById("alert_wrapper");
         var original_play = document.getElementById("original_play")
-        var add_reverb_play = document.getElementById("add_reverb_play")
+        var remove_reverb_play = document.getElementById("remove_reverb_play")
 
         var original_audio = document.getElementById("original_audio")
-        var add_reverb_audio = document.getElementById("add_reverb_audio")
+        var remove_reverb_audio = document.getElementById("remove_reverb_audio")
 
         var original_dl = document.getElementById("original_dl")
-        var add_reverb_dl = document.getElementById("add_reverb_dl")
+        var remove_reverb_dl = document.getElementById("remove_reverb_dl")
         //console.log(original_dl)
         function input_filename() {
                 file_input_label.innerText = input.files[0].name;}
@@ -122,7 +122,7 @@
             cancel_btn.classList.remove("d-none");
             progress_wrapper.classList.remove("d-none");
             original_play.classList.add("d-none")
-            add_reverb_play.classList.add("d-none")
+            remove_reverb_play.classList.add("d-none")
             var file = input.files[0];
             var filename = file.name;
             var filesize = file.size;
@@ -155,23 +155,23 @@
                     original_dl.innerText = request.response.file_path.replace('static/upload/','')
                     //loading_btn.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>" + " Predict..."
                     show_alert(request.response.file_path, "success")
-                        add_reverb_rq = add_reverb('/add_reverb/' + String(request.response.file_path).split('/').join('='))
-                    //alert(add_reverb_rq.status, "success")
-                    if (add_reverb_rq.status == 200){
-                        json = JSON.parse(add_reverb_rq.responseText)
+                        remove_reverb_rq = remove_reverb('/remove_reverb/' + String(request.response.file_path).split('/').join('='))
+                    //alert(remove_reverb_rq.status, "success")
+                    if (remove_reverb_rq.status == 200){
+                        json = JSON.parse(remove_reverb_rq.responseText)
                         show_alert(json.message, "success")
-                        //console.log(add_reverb_rq.responseText)
+                        //console.log(remove_reverb_rq.responseText)
                         //console.log(json.out_file_path)
-                        add_reverb_play.classList.remove("d-none")
-                        add_reverb_audio.src = json.out_file_path
+                        remove_reverb_play.classList.remove("d-none")
+                        remove_reverb_audio.src = json.out_file_path
                         //console.log(json.out_file_path)
-                        //add_reverb_audio.autoplay = true
-                        add_reverb_dl.href = json.out_file_path
-                        add_reverb_dl.innerText = json.out_file_path.replace('static/upload/','')
+                        //remove_reverb_audio.autoplay = true
+                        remove_reverb_dl.href = json.out_file_path
+                        remove_reverb_dl.innerText = json.out_file_path.replace('static/upload/','')
 
                     }
                     else{
-                        show_alert(`Error add_reverb file:` + filename, "danger");
+                        show_alert(`Error remove_reverb file:` + filename, "danger");
                     }
                     loading_btn.classList.add("d-none")
                     loading_btn.innerHTML = "<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>" + " Tải lên"
@@ -199,8 +199,8 @@
             })
         }
 
-        function add_reverb(url){
-            console.log('in add_reverb')
+        function remove_reverb(url){
+            console.log('in remove_reverb')
             var xmlHttp = new XMLHttpRequest();
             cancel_btn.classList.remove("d-none");
             //xmlHttp.responseType = "json";
